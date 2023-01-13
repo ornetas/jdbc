@@ -4,15 +4,18 @@ import java.sql.*;
 public class Main {
     public static void main(String[] args) {
         try {
-            Connection c = DriverManager.getConnection(
+            Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/classicmodels",
                     "root",
                     "root");
-            Statement stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from customers");
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from customers");
 
-            while (rs.next()){
-            System.out.println(rs.getInt(1) + " | " + rs.getString("customerName"));}
+            while (resultSet.next()){
+            System.out.println(resultSet.getInt(1) + " | " + resultSet.getString("customerName"));
+            }
+            connection.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
