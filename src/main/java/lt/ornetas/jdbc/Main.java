@@ -1,16 +1,29 @@
 package lt.ornetas.jdbc;
 
+import java.io.FileInputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) {
         try {
+            Properties properties = new Properties();
+            FileInputStream fileInputStream = new FileInputStream("./src/main/resources/db.properties");
+
+            properties.load(fileInputStream);
+
+            String url = properties.getProperty("db.url");
+            String username = properties.getProperty("db.username");
+            String password = properties.getProperty("db.password");
+
             Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/classicmodels",
-                    "root",
-                    "root");
+                    url,
+                    username,
+                    password
+
+            );
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from customers");
 
